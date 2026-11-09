@@ -1,0 +1,39 @@
+{
+  "title": "R code for the main figures of: Should CDR Be Phased Out After 2100? Investigating the Long-term Sustainability of Carbon Dioxide Removal",
+  "upload_type": "software",
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "description": "R code and figure data that draw Figs. 2 to 5 of the study. The scripts run after download without editing paths; see README.md. The full model results are in the companion dataset (doi:10.5281/zenodo.24074815).",
+  "creators": [
+    {
+      "name": "Sukuman, Thanakon",
+      "affiliation": "Kyoto University",
+      "orcid": "0000-0001-6079-1594"
+    },
+    {
+      "name": "Fujimori, Shinichiro",
+      "affiliation": "Kyoto University",
+      "orcid": "0000-0001-7897-1796"
+    },
+    {
+      "name": "Nishiura, Osamu",
+      "affiliation": "National Institute for Environmental Studies",
+      "orcid": "0009-0001-7825-6554"
+    }
+  ],
+  "keywords": [
+    "carbon dioxide removal",
+    "CDR phase-out",
+    "integrated assessment model",
+    "AIM-Hub",
+    "R"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.24074815",
+      "relation": "isSupplementTo",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}
