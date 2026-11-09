@@ -70,7 +70,7 @@ also hold the six runs of the 1,100 GtCO₂ budget set under those trends; the p
 
 ## Full model results
 
-The full model results in the IAMC template (all variables, 17 regions and the World, to 2150) for the main scenarios and the three
+The full model results in the IAMC template (all variables, the 17 model regions, aggregate regions and the World, every 5 years to 2150) for the main scenarios and the three
 sensitivity sets (1,100 GtCO₂ budget, continued trends after 2100, built-in trends after 2100) are in the companion Zenodo dataset, https://doi.org/10.5281/zenodo.24074815.
 
 ## License
