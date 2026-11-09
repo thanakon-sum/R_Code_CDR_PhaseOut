@@ -65,7 +65,8 @@ All files are extracted from the AIM-Hub model results and the post-processing d
 | `BaU` | Baseline without climate policy |
 | `1100C_2110` to `1100C_2150`, `1100C_2025CP` | MCC scenarios and No Phase-out with the 1,100 GtCO₂ budget (sensitivity set, IAMC files only) |
 
-In the IAMC files every name carries the prefix `SSP2_` and the suffix `_NoCC_No`.
+In the IAMC files every name carries the prefix `SSP2_` and the suffix `_NoCC_No`. The continued-trend and built-in-trends files
+also hold the six runs of the 1,100 GtCO₂ budget set under those trends; the paper does not use them (Table S1).
 
 ## Full model results
 
