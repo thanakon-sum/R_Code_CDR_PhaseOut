@@ -87,7 +87,7 @@ p_line <- ggplot(d_line, aes(x = Year, y = Value_Gt, color = label, group = labe
   geom_hline(yintercept = 0, color = "black", linewidth = 0.4) +
   labs(title = "",
        x = NULL,
-       y = expression("GtCO"[2]*"/yr")) +
+       y = expression("GtCO"[2]*" yr"^{-1})) +
   theme_minimal(base_size = 12) +
   theme(
     panel.grid       = element_blank(),

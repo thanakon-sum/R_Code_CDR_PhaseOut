@@ -35,7 +35,7 @@ make_panel <- function(sc_label, show_y = TRUE) {
     scale_fill_manual(values = cdr_colors, drop = FALSE, name = NULL) +
     scale_x_continuous(breaks = seq(2025, 2150, 25)) +
     scale_y_continuous(limits = c(0, y_max), labels = comma, expand = expansion(mult = c(0, 0.02))) +
-    labs(title = sc_label, x = NULL, y = if (show_y) expression("GtCO"[2]*"/yr") else NULL) +
+    labs(title = sc_label, x = NULL, y = if (show_y) expression("GtCO"[2]*" yr"^{-1}) else NULL) +
     theme_minimal(base_size = 13, base_family = "Helvetica") +
     theme(panel.grid = element_blank(), panel.border = element_blank(),
           axis.line = element_line(colour = "black"), axis.ticks = element_line(colour = "black"),

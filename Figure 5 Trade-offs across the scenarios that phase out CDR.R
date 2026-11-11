@@ -112,6 +112,7 @@ full <- Reduce(function(a, b) full_join(a, b, by = "s"), list(temp, strd, welf, 
 stopifnot(nrow(full) == length(lab) * length(morder), !anyNA(full$value))
 # inequity rows by absolute gap), as in Fig5_ValuePerspectives_2026Oct09/perspectives_numbers.py. The main mode writes the rows
 lett <- setNames(letters[seq_along(morder)], morder)
+disp <- function(x) sub("/yr)", " yr\u207b\u00b9)", x, fixed = TRUE)
 spA <- full %>%
   mutate(o = ifelse(grepl("inequity", metric), abs(value), ifelse(metric %in% flip, -value, value))) %>%
   group_by(metric) %>% summarise(spread = (max(o) - min(o)) / abs(min(o)), .groups = "drop") %>%
@@ -131,8 +132,8 @@ p <- ggplot(full, aes(scenf, metf, fill = rel)) +
                        name = "Within each row", breaks = c(0, 1), labels = c("least challenge", "most challenge"), na.value = "#ECEFF2") +
   scale_colour_manual(values = c(hi = "white", lo = "#051C2C", out = "#3A3A3A")) +
   # row letters a-p, top to bottom, bold (ggtext markdown)
-  scale_y_discrete(labels = function(x) ifelse(x %in% keepA, paste0(x, ", **", lett[x], "**"),
-    paste0("<span style='color:#5A5A5A'>", x, ", **", lett[x], "**</span>"))) +
+  scale_y_discrete(labels = function(x) ifelse(x %in% keepA, paste0(disp(x), ", **", lett[x], "**"),
+    paste0("<span style='color:#5A5A5A'>", disp(x), ", **", lett[x], "**</span>"))) +
   labs(x = NULL, y = NULL) +
   theme_minimal(base_size = 7, base_family = "Helvetica") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 6.5, colour = "black"),
@@ -151,12 +152,23 @@ sc <- full %>% filter(metric %in% keepA) %>% group_by(scenf) %>% summarise(score
   mutate(nudge = ifelse(row_number() %% 2 == 1, 0.95, -0.95),  # labels alternate above and below the bar
          nudge = ifelse(LONGROWS & scenf == "No Phase-out", -0.95, nudge),
          g = " ")  # blank header strip: o gets the same columns as the heatmap, so the label sits beside a-n
+# sides alternating, so close scores no longer hide each other (Fig. S19 has 7 scores within 0.042); its label goes to its side
+dmin <- 0.023  # dot diameter in score units at this print size
+lanes <- c(u1 = 0.19, d1 = -0.19, u2 = 0.53, d2 = -0.53)
+last <- setNames(rep(-Inf, 4), names(lanes)); side <- "d"; ln <- character(nrow(sc))
+for (i in seq_len(nrow(sc))) {
+  pref <- if (side == "u") c("d1", "u1", "d2", "u2") else c("u1", "d1", "u2", "d2")
+  gap <- sc$score[i] - last[pref]
+  ln[i] <- if (any(gap >= dmin)) pref[gap >= dmin][1] else pref[which.max(gap)]
+  last[ln[i]] <- sc$score[i]; side <- substr(ln[i], 1, 1)
+}
+sc$lane <- unname(lanes[ln]); sc$nudge <- sign(sc$lane) * 1.2 - sc$lane  # all labels of a side on one line
 cat("Overall challenge score (panel q):\n"); print(as.data.frame(sc[, 1:2]), digits = 3)
 ramp_x <- seq(0.0025, 0.9975, by = 0.005)
-po <- ggplot(sc, aes(score, 0)) +
-  geom_tile(data = data.frame(x = ramp_x), aes(x, 0, fill = x), width = 0.005, height = 0.45, inherit.aes = FALSE) +
+po <- ggplot(sc, aes(score, lane)) +
+  geom_tile(data = data.frame(x = ramp_x), aes(x, 0, fill = x), width = 0.005, height = 1.42, inherit.aes = FALSE) +
   scale_fill_gradientn(colours = c("#F3F6F9", "#A8E0D9", "#00A9F4", "#2251FF", "#051C2C"), guide = "none") +
-  geom_point(size = 2.3, colour = "white") + geom_point(aes(colour = scenf), size = 1.7) +
+  geom_point(size = 1.7, colour = "grey15") + geom_point(size = 1.45, colour = "white") + geom_point(aes(colour = scenf), size = 1.1) +
   ggrepel::geom_text_repel(aes(label = scenf), nudge_y = sc$nudge, direction = "x", size = 2.1,
                            family = "Helvetica", colour = "grey15", segment.colour = "grey40",
                            segment.size = 0.2, min.segment.length = 0, box.padding = if (LONGROWS) 0.35 else 0.12, seed = 1,
@@ -165,7 +177,7 @@ po <- ggplot(sc, aes(score, 0)) +
   scale_colour_manual(values = mck_scen, guide = "none") +
   scale_x_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25), expand = expansion(add = 0.01),
                      labels = c("0\nleast challenge", "0.25", "0.50", "0.75", "1\nmost challenge")) +
-  scale_y_continuous(limits = c(-1.5, 1.5), breaks = 0, labels = paste0("Overall challenge score, **", if (LONGROWS) "s" else "q", "**")) +
+  scale_y_continuous(limits = c(-1.6, 1.6), breaks = 0, labels = paste0("Overall challenge score, **", if (LONGROWS) "s" else "q", "**")) +
   facet_grid(g ~ ., switch = "y") +
   labs(x = paste0("Mean position within the ", length(keepA), " rows that differ by at least 10% across the ", if (LONGROWS) "11 scenarios" else "phase-out scenarios", ", each weighted equally"), y = NULL) +
   theme_minimal(base_size = 7, base_family = "Helvetica") +

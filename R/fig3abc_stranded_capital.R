@@ -233,7 +233,7 @@ p_a <- ggplot(annual_total, aes(x=Y, y=V_B, color=label)) +
   scale_color_manual(values=pal_scen, breaks=scen_order[-1], name=NULL) +
   scale_x_continuous(breaks=seq(2025,2150,15)) +
   labs(title="(a) Annual stranded capital, all technologies, net of BaU (World)",
-       x=NULL, y="B$/yr") +
+       x=NULL, y="B$ yr\u207b\u00b9") +
   theme_bw(base_size=10) +
   theme(plot.title=element_text(size=9, face="bold"),
         panel.grid.minor=element_blank(),

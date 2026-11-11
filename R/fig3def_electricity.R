@@ -115,7 +115,7 @@ p_a <- ggplot(df_a, aes(x = year, y = value, color = label)) +
   scale_color_manual(values = pal, breaks = scenario_order, name = NULL) +
   x_scale +
   scale_y_continuous(labels = scales::comma_format(accuracy = 1)) +
-  labs(title = "(a) Total Electricity", x = NULL, y = "EJ/yr") +
+  labs(title = "(a) Total Electricity", x = NULL, y = "EJ yr\u207b\u00b9") +
   theme_clean()
 
 # --- Panel (b): DAC electricity input, dual y-axis ---
@@ -124,7 +124,7 @@ p_b <- ggplot(df_dac, aes(x = year, color = label)) +
   scale_color_manual(values = pal, breaks = scenario_order, name = NULL) +
   x_scale +
   scale_y_continuous(
-    name     = "EJ/yr",
+    name     = "EJ yr\u207b\u00b9",
     labels   = scales::comma_format(accuracy = 1),
     sec.axis = sec_axis(
       transform = ~ . * sf,
@@ -150,7 +150,7 @@ p_c <- ggplot(df_bar, aes(x = label, y = value, fill = type)) +
     name   = NULL
   ) +
   scale_y_continuous(
-    name     = "EJ/yr",
+    name     = "EJ yr\u207b\u00b9",
     labels   = scales::comma_format(accuracy = 1),
     sec.axis = sec_axis(~ . / sf2, name = "% of total electricity",
                         breaks = seq(0, pct_top, 5),

@@ -101,13 +101,13 @@ p <- ggplot() +
     name=expression("Annual CO"[2]*" emissions (GtCO"[2]*" yr"^{-1}*")"),
     limits=c(emi_range[1], max(emi_range[2], temp_y_hi + 0.5)),
     sec.axis=sec_axis(~to_temp(.),
-      name="Global Average Temp above pre-industrial(°C)",
+      name="Global mean temperature above pre-industrial (°C)",
       breaks=seq(1.0,1.8,0.1))
   ) +
   annotate("text",x=2026,y=emi_range[1]*0.92,label="Policy start (2025)",
            hjust=0,size=2.8,colour="grey35") +
   annotate("text", x=2028, y=residual_level - 2.4,
-           label=paste0("Residual Emission (", sprintf("%.2f", residual_level), " GtCO\u2082/yr)"),
+           label=paste0("Residual emission\n(", sub("-", "\u2212", sprintf("%.2f", residual_level)), " GtCO\u2082 yr\u207b\u00b9)"), lineheight=0.95,
            hjust=0, vjust=1, size=2.8, colour="grey30", fontface="italic") +
   annotate("text",x=2140,y=to_emi(1.5)+0.9,vjust=0,label="1.5°C",  # bottom-anchored: clears the dotted line at any size
            hjust=0,size=2.8,colour="#E41A1C") +
